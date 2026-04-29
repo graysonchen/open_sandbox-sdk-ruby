@@ -2,8 +2,39 @@
 
 Ruby SDK for the [open-sandbox.ai](https://open-sandbox.ai) API — manage isolated container sandboxes for secure code execution.
 
+> ⚠️ **This is an unofficial Ruby gem**, not affiliated with or maintained by the OpenSandbox team.
+> Official project: [alibaba/OpenSandbox](https://github.com/alibaba/OpenSandbox)
+
 [![Gem Version](https://badge.fury.io/rb/open_sandbox.svg)](https://rubygems.org/gems/open_sandbox)
 [![CI](https://github.com/graysonchen/open_sandbox-sdk-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/graysonchen/open_sandbox-sdk-ruby/actions)
+
+## What is OpenSandbox?
+
+[OpenSandbox](https://github.com/alibaba/OpenSandbox) is a **general-purpose sandbox platform for AI applications**, open-sourced by Alibaba and listed in the [CNCF Landscape](https://landscape.cncf.io/?item=orchestration-management--scheduling-orchestration--opensandbox).
+
+### The Problem It Solves
+
+Modern AI applications — coding agents, browser automation, RL training, AI code execution — need to **run untrusted or model-generated code safely**. Spinning up ephemeral containers manually, wiring up lifecycle management, handling networking, streaming logs, and tearing everything down reliably is complex and error-prone.
+
+OpenSandbox solves this by providing:
+
+- **Isolated runtime environments** — each sandbox runs in its own container, fully isolated from the host and other workloads. Supports secure runtimes like gVisor, Kata Containers, and Firecracker microVM.
+- **Unified sandbox lifecycle API** — provision, monitor, pause, resume, renew, and terminate sandboxes via a single consistent API, backed by Docker or Kubernetes.
+- **In-sandbox execution** — run shell commands, execute multi-language code (Python, Node.js, etc.), manage files, expose ports, and stream logs/metrics from inside the sandbox.
+- **Resource Pools** — pre-warm sandbox pools to eliminate cold-start latency for high-throughput workloads.
+- **Network policy** — per-sandbox ingress/egress controls with unified gateway routing.
+
+### Typical Use Cases
+
+| Scenario | Description |
+|---|---|
+| **Coding Agents** | Run Claude Code, Gemini CLI, Codex, and other agent tools in isolated sandboxes |
+| **AI Code Execution** | Safely execute model-generated code, stream outputs, iterate with reproducible environments |
+| **Browser Automation** | Run Chrome / Playwright workloads with controlled runtime and networking |
+| **Remote Development** | Host VS Code Web and cloud desktop environments securely |
+| **RL Training** | Launch reinforcement learning tasks with managed sandbox lifecycle and resource controls |
+
+This Ruby gem wraps the OpenSandbox HTTP API so you can use all of the above from your Ruby or Rails application.
 
 ## Installation
 
@@ -180,6 +211,10 @@ OpenSandbox::LogUtils.strip_timestamps(raw)
 bundle install
 bundle exec rake test     # run all tests
 ```
+
+## Other SDKs
+
+OpenSandbox provides official SDKs for multiple languages. See the full list at [alibaba/OpenSandbox — SDKs](https://github.com/alibaba/OpenSandbox/tree/main#sdks).
 
 ## License
 
