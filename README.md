@@ -1,5 +1,7 @@
 # OpenSandbox
 
+[中文版](README.zh-CN.md)
+
 Ruby SDK for the [open-sandbox.ai](https://open-sandbox.ai) API — manage isolated container sandboxes for secure code execution.
 
 > ⚠️ **This is an unofficial Ruby gem**, not affiliated with or maintained by the OpenSandbox team.
