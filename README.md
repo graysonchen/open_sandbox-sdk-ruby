@@ -29,7 +29,7 @@ This creates `config/initializers/open_sandbox.rb`:
 OpenSandbox.configure do |config|
   # config.base_url = ENV.fetch("SANDBOX_DOMAIN", "https://api.open-sandbox.ai")
   # config.api_key  = ENV.fetch("SANDBOX_API_KEY")
-  # config.timeout  = 30
+  # config.timeout  = 300
   # config.logger   = Rails.logger
 end
 ```
@@ -47,7 +47,40 @@ OpenSandbox.configure do |c|
   c.api_key  = "sk-..."                  # omit for local dev
   c.logger   = Logger.new($stdout, level: :debug)
 end
+```
 
+
+## Runner — one-shot code execution
+
+```ruby
+# Python
+result = OpenSandbox::Runner.python("print(2 ** 10)")
+result.output    # => "1024\n"
+result.success?  # => true
+result.elapsed   # => 3.14
+
+# Node.js
+result = OpenSandbox::Runner.node("console.log('hi')")
+
+# Shell
+result = OpenSandbox::Runner.shell("echo $((6 * 7))")
+
+# Custom image
+result = OpenSandbox::Runner.call(
+  image:   "ubuntu:24.04",
+  command: ["bash", "-c", "ls /"],
+  timeout: 60
+)
+```
+
+The sandbox is always deleted after the run (even on error).
+`Runner` uses `OpenSandbox.logger` — set it to `Rails.logger` in your initializer to get structured logs.
+
+Timeout resolution order: explicit `timeout:` argument → `SANDBOX_TIMEOUT` ENV → `300` s (default).
+
+## OpenSandbox client
+
+```
 client = OpenSandbox.client
 
 # Create a sandbox
@@ -115,7 +148,7 @@ puts client.sandboxes.diagnostics(id)     # inspect + events + logs combined
 |------------|-------------------|----------------------------|
 | `base_url` | `SANDBOX_DOMAIN`  | `http://localhost:8787`    |
 | `api_key`  | `SANDBOX_API_KEY` | `nil` (optional for local) |
-| `timeout`  | `SANDBOX_TIMEOUT` | `30` (seconds)             |
+| `timeout`  | `SANDBOX_TIMEOUT` | `300` (seconds)            |
 | `logger`   | —                 | `Logger.new(nil)` (silent) |
 
 ## Error Handling

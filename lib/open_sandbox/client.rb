@@ -30,7 +30,7 @@ require_relative "pools"
 #   OpenSandbox.configure do |c|
 #     c.base_url = "https://api.open-sandbox.ai"
 #     c.api_key  = "sk-..."
-#     c.timeout  = 30
+#     c.timeout  = 300
 #     c.logger   = Logger.new($stdout, level: :info)
 #   end
 #
@@ -42,7 +42,7 @@ module OpenSandbox
     def initialize
       @base_url = ENV.fetch("SANDBOX_DOMAIN", "http://localhost:8787")
       @api_key  = ENV.fetch("SANDBOX_API_KEY", nil)
-      @timeout  = 30
+      @timeout  = ENV.fetch("SANDBOX_TIMEOUT", 300).to_i
       @logger   = Logger.new(nil) # silent by default
     end
   end
