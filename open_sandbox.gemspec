@@ -31,6 +31,9 @@ Gem::Specification.new do |spec|
     "README.md"
   ]
 
+  # Rails generator & initializer template
+  spec.files += Dir["lib/generators/**/*"]
+
   spec.require_paths = ["lib"]
 
   spec.add_dependency "httparty", ">= 0.21", "< 1"

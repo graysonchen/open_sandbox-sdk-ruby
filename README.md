@@ -15,6 +15,27 @@ gem "open_sandbox", path: "../open_sandbox"   # local development
 gem "open_sandbox", "~> 0.1"
 ```
 
+## Rails
+
+Generate the initializer in your Rails app:
+
+```bash
+rails generate open_sandbox:install
+```
+
+This creates `config/initializers/open_sandbox.rb`:
+
+```ruby
+OpenSandbox.configure do |config|
+  # config.base_url = ENV.fetch("SANDBOX_DOMAIN", "https://api.open-sandbox.ai")
+  # config.api_key  = ENV.fetch("SANDBOX_API_KEY")
+  # config.timeout  = 30
+  # config.logger   = Rails.logger
+end
+```
+
+Uncomment and adjust the options you need. By default the SDK reads `SANDBOX_DOMAIN` and `SANDBOX_API_KEY` from ENV, so the initializer can stay empty for most setups.
+
 ## Quick Start
 
 ```ruby
