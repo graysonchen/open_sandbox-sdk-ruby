@@ -70,7 +70,7 @@ module OpenSandbox
 
     def build_headers(extra = {})
       headers = { "Accept" => "application/json" }
-      headers["Authorization"] = "Bearer #{api_key}" if api_key && !api_key.empty?
+      headers["OPEN-SANDBOX-API-KEY"] = api_key if api_key && !api_key.empty?
       headers.merge(extra)
     end
 
